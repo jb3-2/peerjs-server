@@ -5,6 +5,6 @@ COPY bin ./bin
 COPY dist ./dist
 COPY package.json .
 RUN npm install --production
-EXPOSE 9000
+EXPOSE 8080
 ENTRYPOINT ["node", "bin/peerjs"]
-CMD [ "--port", "9000", "--path", "/myapp" ]
+CMD [ "--port", "8080", "--path", "/binenand", "--proxied", "true" ]
