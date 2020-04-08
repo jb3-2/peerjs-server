@@ -7,4 +7,4 @@ COPY package.json .
 RUN npm install --production
 EXPOSE 8080
 ENTRYPOINT ["node", "bin/peerjs"]
-CMD [ "--port", "8080", "--path", "/binenand", "--proxied", "true" ]
+CMD [ "--port", "8080", "--path", "/binenand", "--proxied", "true", "--concurrent_limit", "500000" ]

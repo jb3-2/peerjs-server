@@ -1,27 +1,41 @@
 runtime: custom
 env: flex
-automatic_scaling:
-  min_num_instances: 1
-  max_num_instances: 1
+service: binenand-peerjs-server
+
+manual_scaling:
+  instances: 1
 
 network:
-  #forwarded_ports:
-  #  - 65080
-  #  instance_tag: websocket
   session_affinity: true
+
+resources:
+  cpu: 10
+  memory_gb: 64
+
+liveness_check:
+  path: "/binenand/peerjs/id"
+  check_interval_sec: 60
+  timeout_sec: 4
+  failure_threshold: 2
+  success_threshold: 2
 
 # create new Google AppEngine project using command" line:
 # gcloud init
+
 # create new AppEngine service:
 # gcloud app create
 # choose region europe-west-6
 # do everything else necessary for administrative purposes during the execution of this command
+
 # cd into current directory where the current file resides, deploy app to cloud:
 # gcloud app deploy
 # (on error of missing billing account: copy url in error message to browser and link billing account. Retry gcloud app deploy)
 # local files are copied over to google app engine project, then Docker image is built using dockerfile, then service ist configured using app.yaml, then service is started using Dockerfile.
+
 # go to https://console.cloud.google.com/appengine to see your service backend
+
 # open app here: https://[projectname].appspot.com/binenand/peerjs/id --> You should see an id
+
 # in peerjs client project: Update connection info of Peer to:
 #  {
 #        host: '[projectname].appspot.com', # or whatever url gcloud app deploy command told you
@@ -29,23 +43,7 @@ network:
 #        path:'/binenand',
 #        secure: true
 #  }
+
+# ?
+
 # profit!
-
-
-# old stuff regarding firewall rules and port forwarding that once seemed necessary but as of now now are not used anymore.
-
-# Set up firewall rule to allow websockets, see https://medium.com/google-cloud/a-node-js-websocket-server-on-google-app-engine-c6c32a486e9a
-# gcloud compute firewall-rules create default-allow-websockets --allow tcp:65080 --target-tags websocket --description "Allow websocket traffic on port 65080"
-
-#network:
-  #forwarded_ports:
-  #  - 65080
-  #  instance_tag: websocket
-
-#network:
-#  forwarded_ports:
-#    - 9000
-# Traffic must be directly addressed to the target instance's IP address rather than over the appspot.com domain or your custom domain.
-# https://cloud.google.com/appengine/docs/flexible/custom-runtimes/configuring-your-app-with-app-yaml
-# By default, incoming traffic from outside your network is not allowed through the Google Cloud Platform firewalls. After you have specified port forwarding in your app.yaml file, you must add a firewall rule that allows traffic from the ports you want opened.
-# You can specify a firewall rule in the Networking Firewall Rules page in the Google Cloud Console or using gcloud commands.
