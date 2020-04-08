@@ -24,7 +24,7 @@ liveness_check:
 
 # create new AppEngine service:
 # gcloud app create
-# choose region europe-west-6
+# choose region europe-west6-a
 # do everything else necessary for administrative purposes during the execution of this command
 
 # cd into current directory where the current file resides, deploy app to cloud:
