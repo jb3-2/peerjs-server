@@ -1,16 +1,22 @@
 runtime: custom
 env: flex
-service: binenand-peerjs-server
+# service: binenand-peerjs-server-1
 
-manual_scaling:
-  instances: 1
+automatic_scaling:
+  min_num_instances: 1
+  max_num_instances: 2
+  cpu_utilization:
+    target_utilization: 0.8
+
+#manual_scaling:
+#  instances: 1
 
 network:
   session_affinity: true
 
 resources:
-  cpu: 10
-  memory_gb: 64
+  cpu: 2
+  memory_gb: 6
 
 liveness_check:
   path: "/binenand/peerjs/id"
