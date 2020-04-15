@@ -1,22 +1,26 @@
 runtime: custom
 env: flex
-# service: binenand-peerjs-server-1
 
-automatic_scaling:
-  min_num_instances: 1
-  max_num_instances: 2
-  cpu_utilization:
-    target_utilization: 0.8
+# Default service (no "service" line) is used as prod service.
+# Uncomment the following line to create a the staging service.
+# service: staging
 
-#manual_scaling:
-#  instances: 1
+# multi-instance config:
+# automatic_scaling:
+#   min_num_instances: 1
+#   max_num_instances: 2
+#   cpu_utilization:
+#     target_utilization: 0.8
+
+manual_scaling:
+  instances: 1
 
 network:
   session_affinity: true
 
 resources:
   cpu: 2
-  memory_gb: 6
+  memory_gb: 4
 
 liveness_check:
   path: "/binenand/peerjs/id"
